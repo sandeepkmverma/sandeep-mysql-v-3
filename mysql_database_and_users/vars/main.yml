@@ -1,0 +1,7 @@
+---
+database_name:
+        - { db_name: test1, db_user: sandeep, user_password: admin, user_access: '*.*:ALL' }
+        - { db_name: test2, db_user: sanny, user_password: admin, user_access: '*.*:ALL' }
+        - { db_name: test3, db_user: sandy, user_password: admin, user_access: '*.*:ALL' }
+        - { db_name: test4, db_user: sny, user_password: admin, user_access: '*.*:ALL' }
+

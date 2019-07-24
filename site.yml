@@ -1,0 +1,5 @@
+---
+- hosts: ubuntuserver
+  roles:
+    - mysql_role
+    - mysql_database_and_users

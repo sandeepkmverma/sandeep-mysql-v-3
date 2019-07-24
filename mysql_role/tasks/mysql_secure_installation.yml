@@ -1,0 +1,72 @@
+---
+#- name: Specify MySQL root password before installing
+#  debconf: name='mysql-server' question='mysql-server/root_password' value='{{mysql_root_password | quote}}' vtype='password'
+#  become: true
+
+
+- name: Installing Packages for Python-MySQL for Debian
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+     - mysql-client
+     - mysql-common
+     - mysql-server
+     - python-mysqldb
+     - python3-dev
+     - python3-mysqldb
+     - libmysqlclient-dev
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Set root user password
+  mysql_user:
+    name: root
+    password: "{{ mysql_root_password}}"
+    check_implicit_admin: true
+
+- name: Add config file
+  template: src=my.cnf.j2 dest=/root/.my.cnf owner=root group=root mode=0600
+
+- name: Reload privilege tables
+  command: 'mysql -e "{{ item }}"'
+  with_items:
+    - FLUSH PRIVILEGES
+  changed_when: False
+
+- name: Deletes anonymous MySQL server user for ansible_fqdn
+  mysql_user: 
+    user: ""
+    host: "{{ ansible_fqdn }}"
+    state: absent
+
+- name: Secures the MySQL root user for IPV4 localhost (127.0.0.1)
+  mysql_user: 
+    user: root
+    password: "{{ mysql_root_password }}" 
+    host: 127.0.0.1
+
+- name: Secures the MySQL root user for localhost domain (localhost)
+  mysql_user: 
+    user: root
+    password: "{{ mysql_root_password }}" 
+    host: localhost
+
+- name: Secures the MySQL root user for server_hostname domain
+  mysql_user: 
+    user: root
+    password: "{{ mysql_root_password }}" 
+    host: "{{ ansible_fqdn }}"
+
+- name: Removes the MySQL test database
+  mysql_db: 
+    db: test 
+    state: absent
+
+- name: Reload privilege tables
+  command: 'mysql -ne "{{ item }}"'
+  with_items:
+    - FLUSH PRIVILEGES
+  changed_when: False
+  notify:
+    - Restarting MySQL
+

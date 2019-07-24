@@ -1,0 +1,16 @@
+---
+- name: Installation of MySQL on Ubuntu  
+  import_tasks: debian.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Installing MySQL-Python Dependencies
+  import_tasks: python_dependencies.yml
+
+- name: Installaiton of MySQL on CentOS
+  import_tasks: redhat.yml
+  when: ansible_distribution == 'CentOS' or ansible_os_family == "RedHat" or ansible_os_family == "Amazon"
+
+- name: MySQL Secure Installation
+  import_tasks: mysql_secure_installation.yml
+
+

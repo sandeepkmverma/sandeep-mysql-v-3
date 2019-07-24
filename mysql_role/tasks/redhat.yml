@@ -1,0 +1,18 @@
+---
+- name: Downloading rpm for mysql
+  get_url: url={{mysql_repo}} dest=/opt/
+
+- name: Installing repo
+  yum: name=/opt/{{mysql_rpm_name}} state=present
+  ignore_errors: yes
+
+- name: Installing mysql server
+  yum: name={{item.pkg_name}} state=latest update_cache=yes
+  with_items: "{{ centos_package_name }}"
+
+- name: Starting and Enabling mysql
+  service: 
+    name: mysqld
+    state: started
+    enabled: yes 
+

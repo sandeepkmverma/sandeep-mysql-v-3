@@ -1,0 +1,4 @@
+---
+mysql_root_password: "sandeep"
+mysql_rpm_name: mysql-community-release-el6-5.noarch.rpm
+zlib_tar_file: zlib-1.2.11.tar.gz

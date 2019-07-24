@@ -1,0 +1,9 @@
+---
+- name: Installing Mysql and dependencies
+  apt: name={{item.pkg_name}} state=present update_cache=yes
+  with_items: "{{ debian_package_name }}"
+
+- name: Starting and Enabing Mysql service
+  service: name=mysql state=started enabled=yes
+  ignore_errors: yes
+

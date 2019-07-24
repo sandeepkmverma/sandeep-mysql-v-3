@@ -1,0 +1,38 @@
+---
+- name: Installing Build-Essentials
+  apt:
+    name: build-essential
+    state: present
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Downloading zlib
+  get_url:
+    url: "{{ zlib_package  }}"
+    dest: /opt
+
+- name: Unpack the source
+  unarchive:
+    src: /opt/{{zlib_tar_file}}
+    dest: /opt/
+    remote_src: yes
+      
+- name: Installing gcc
+  package:
+    name: gcc
+    state: present
+
+- name: Executing the script
+  command: "./configure --shared --prefix=/usr"
+  args:
+    chdir: /opt/zlib-1.2.11/
+
+- name: Build the default target
+  make:
+    chdir: /opt/zlib-1.2.11/
+
+- name: Run 'install' target
+  command: "make install"
+  args:
+    chdir: /opt/zlib-1.2.11/
+
+

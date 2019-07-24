@@ -1,0 +1,9 @@
+---
+- name: Creating Database Users
+  mysql_user:
+    name: "{{ item.db_user }}"
+    password: "{{ item.user_password }}"
+    priv: "{{ item.user_access }}"
+    state: present
+  with_items: "{{ database_name }}"
+

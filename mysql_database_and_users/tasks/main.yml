@@ -1,0 +1,6 @@
+---
+- name: Creating Databases for MySQL
+  import_tasks: database.yml
+
+- name: Creating Users for MySQL
+  import_tasks: user.yml
