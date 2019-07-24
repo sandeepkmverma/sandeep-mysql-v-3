@@ -5,6 +5,15 @@ debian_package_name:
 
 mysql_repo: http://repo.mysql.com/{{mysql_rpm_name}}
 
+debian_package_Python_MySQL:
+        - { pkg_name: mysql-client }
+        - { pkg_name: mysql-common }
+        - { pkg_name: mysql-server }
+        - { pkg_name: python-mysqldb }
+        - { pkg_name: python3-dev }
+        - { pkg_name: python3-mysqldb }
+        - { pkg_name: libmysqlclient-dev }
+
 centos_package_name:
         - { pkg_name: mysql }
         - { pkg_name: mysql-server }
