@@ -12,11 +12,6 @@ Role Variables
 --------------
 
 ```
-
-
-```
-
-```
 # defaults/main.yml
 
 mysql_root_password: "sandeep"
