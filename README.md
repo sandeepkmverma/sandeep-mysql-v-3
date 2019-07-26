@@ -20,6 +20,8 @@ database_name: # --> vars/main.yml
         - { db_name: test3, db_user: sandy, user_password: admin, user_access: '*.*:ALL' }
         - { db_name: test4, db_user: sny, user_password: admin, user_access: '*.*:ALL' }
 
+You can add, change database name, users and their permissions.
+
 
 ```
 
@@ -39,6 +41,8 @@ A playbook to use the role.
     become: true
     roles: 
       - mysql_role
+      - mysql_database_and_users
+
 ```
 
 Author Information
